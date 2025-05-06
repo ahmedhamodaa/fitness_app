@@ -1,3 +1,14 @@
+buildscript {
+    repositories {
+        google()  // إضافة مستودع Google
+        mavenCentral()  // إضافة مستودع Maven Central
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.0.0")  // الـ Gradle Plugin
+        classpath("com.google.gms:google-services:4.3.15")  // Google Services Plugin
+    }
+}
+
 allprojects {
     repositories {
         google()

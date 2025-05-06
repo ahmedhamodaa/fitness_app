@@ -1,8 +1,10 @@
 // screens/profile_screen.dart
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter/material.dart';
-import '../models/user.dart';
+import '../models/user.dart' ;
 import '../widgets/progress_chart.dart';
 import '../services/database_service.dart';
+import 'login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -146,10 +148,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 8.0),
               OutlinedButton(
-                onPressed: () {
-                  // Log out
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Logout (not implemented)')),
+                onPressed: () async{
+                  await fb.FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Login()),
                   );
                 },
                 style: OutlinedButton.styleFrom(
