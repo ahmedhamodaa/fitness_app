@@ -189,13 +189,12 @@ class _SignUpState extends State<SignUp> {
           Container(height: 20),
 
           Container(height: 20),
-          // Text("Don't Have An Account ? Resister" , textAlign: TextAlign.center,)
           InkWell(
             onTap: () {
               Navigator.pushReplacement(
-                context, // First argument is context
+                context,
                 MaterialPageRoute(
-                  builder: (context) => Login(), // Second argument is the route
+                  builder: (context) => Login(),
                 ),
               );
 
