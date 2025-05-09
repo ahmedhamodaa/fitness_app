@@ -1,0 +1,2 @@
+C:/Users/DELL/Documents/fitness_app/android/app/.cxx/RelWithDebInfo/673r1a1z/x86/CMakeFiles/edit_cache.dir
+C:/Users/DELL/Documents/fitness_app/android/app/.cxx/RelWithDebInfo/673r1a1z/x86/CMakeFiles/rebuild_cache.dir

@@ -22,7 +22,7 @@ class WorkoutCard extends StatelessWidget {
               workout.imageUrl,
               height: 150.0,
               width: double.infinity,
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
               errorBuilder: (context, error, stackTrace) {
                 return Container(
                   height: 150.0,

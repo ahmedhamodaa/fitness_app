@@ -42,14 +42,15 @@ class _SplashScreenState extends State<SplashScreen> {
               backgroundColor: Colors.transparent,
               child: ClipOval(
                 child: Image.asset(
-                  'assets/images/logo.png',
+                  'assets/images/logo.jpg',
                   width: 128,
                   height: 128,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            Text('FitTrack',style: TextStyle(fontSize: 24,color: Colors.green,fontWeight: FontWeight.bold),)
+            Text('FitTrack',style: TextStyle(fontSize: 24,color: Color(
+                0xff00bd61),fontWeight: FontWeight.bold),)
           ],
         ),
       ),

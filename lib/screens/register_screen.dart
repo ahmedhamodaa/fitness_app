@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,7 @@ class _SignUpState extends State<SignUp> {
           ),
 
           Container(
-            color: Colors.white.withAlpha(210),
+            color: Colors.white.withAlpha(240),
           ),
           Container(
             padding: const EdgeInsets.all(20),
@@ -57,9 +58,6 @@ class _SignUpState extends State<SignUp> {
                     const Text("SignUp",
                         style:
                         TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-                    Container(height: 10),
-                    const Text("SignUp To Continue Using The App",
-                        style: TextStyle(color: Colors.grey)),
                     Container(height: 20),
                     const Text(
                       "username",
@@ -141,7 +139,6 @@ class _SignUpState extends State<SignUp> {
                 : CustomButtonAuth(
                   title: "SignUp",
                   onPressed: () async {
-
                     if (formState.currentState!.validate()) {
                       setState(() {
                         isLoading = true;
@@ -153,6 +150,17 @@ class _SignUpState extends State<SignUp> {
                           password: password.text,
                         );
                         FirebaseAuth.instance.currentUser!.sendEmailVerification();
+                        String uid = credential.user!.uid;
+                        await FirebaseFirestore.instance.collection('users').doc(uid).set({
+                          'username': username.text,
+                          'email': email.text,
+                          'age': '20',
+                          'height': '180',
+                          'weight': '60',
+                          'goal': 'Balanced',
+                          'profileImgUrl': 'https://res-console.cloudinary.com/dsp9effrj/thumbnails/v1/image/upload/v1746778763/cHJvZmlsZV9waWNfemRrZnN4/preview',
+                        });
+                        print('added successfully');
                         setState(() {
                           isLoading = false;
                         });

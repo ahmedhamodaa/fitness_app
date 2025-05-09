@@ -3,6 +3,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_app/screens/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../widgets/custom_button_auth.dart';
 import '../widgets/custom_logo_auth.dart';
@@ -25,6 +26,35 @@ class _LoginState extends State<Login> {
   bool isLoading = false;
   bool isPasswordVisible = false;
 
+  Future signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    if (googleUser == null) {
+      return; //==================
+    }
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+    await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    await FirebaseAuth.instance.signInWithCredential(credential);
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomeScreen(),
+      ),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +71,7 @@ class _LoginState extends State<Login> {
           ),
 
           Container(
-            color: Colors.white.withAlpha(210),
+            color: Colors.white.withAlpha(240),
           ),
           Container(
             padding: const EdgeInsets.all(20),
@@ -101,13 +131,49 @@ class _LoginState extends State<Login> {
                             return "Can't To be Empty";
                           }
                         }),
-                    Container(
-                      margin: const EdgeInsets.only(top: 10, bottom: 20),
-                      alignment: Alignment.topRight,
-                      child: const Text(
-                        "Forgot Password ?",
-                        style: TextStyle(
-                          fontSize: 14,
+                    InkWell(
+                      onTap: () async {
+                        if (email.text == "") {
+                          AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.warning,
+                            animType: AnimType.rightSlide,
+                            title: 'Missing Email',
+                            desc:
+                             "Please enter your email and press Forget Password",
+                          ).show();
+                          return;
+                        }
+                        try {
+                          await FirebaseAuth.instance
+                              .sendPasswordResetEmail(email: email.text);
+                          AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.success,
+                            animType: AnimType.rightSlide,
+                            title: 'Link Sent',
+                            desc:
+                              "We've sent you a link to reset your password. Please check your email",
+                          ).show();
+                        }catch (e) {
+                          AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.error,
+                              animType: AnimType.rightSlide,
+                              title: 'Invalid Email',
+                              desc:
+                              "Please make sure the email address you entered is correct")
+                              .show();
+                        }
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 10, bottom: 20),
+                        alignment: Alignment.topRight,
+                        child: const Text(
+                          "Forgot Password ?",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
                         ),
                       ),
                     ),
@@ -194,7 +260,9 @@ class _LoginState extends State<Login> {
                   side: BorderSide(color: Color(0xff169E3C), width: 2),
                   backgroundColor: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  signInWithGoogle();
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

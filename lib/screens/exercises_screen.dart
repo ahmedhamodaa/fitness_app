@@ -1,5 +1,6 @@
 // screens/exercise_screen.dart
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/exercise.dart';
 
 class ExerciseScreen extends StatelessWidget {
@@ -86,23 +87,25 @@ class ExerciseScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               SizedBox(height: 8.0),
-              // Video player would go here, but for simplicity,
-              // we're just showing a button that would open the video
               ElevatedButton.icon(
-                onPressed: () {
-                  // Open video player or web link
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Opening video guide (not implemented)'),
-                    ),
-                  );
+                onPressed: () async {
+                  final Uri url = Uri.parse(exercise.videoUrl);
+                  try {
+                    await launchUrl(url, mode: LaunchMode.externalApplication);
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Could not launch video: $e')),
+                    );
+                  }
                 },
+
                 icon: Icon(Icons.play_circle),
                 label: Text('Watch Video Guide'),
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(double.infinity, 50.0),
                 ),
               ),
+
             ],
           ],
         ),

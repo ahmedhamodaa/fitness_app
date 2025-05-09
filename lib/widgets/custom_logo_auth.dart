@@ -12,10 +12,11 @@ class CustomLogoAuth extends StatelessWidget {
           height: 80,
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-              color: Color(0xff169E3C),
+              color: Colors.white,
+              border: Border.all(width: 2,color: Colors.black12),
               borderRadius: BorderRadius.circular(70)),
           child: Image.asset(
-            "assets/images/logo.png",
+            "assets/images/logo.jpg",
             height: 55,
             // fit: BoxFit.fill,
           )),

@@ -89,8 +89,6 @@ class WorkoutScreen extends StatelessWidget {
             SizedBox(height: 24.0),
             ElevatedButton(
               onPressed: () {
-                // Start workout
-                // Navigate to workout tracking screen (not implemented in this example)
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Starting workout: ${workout.name}')),
                 );
