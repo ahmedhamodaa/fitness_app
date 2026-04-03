@@ -80,7 +80,7 @@ final ThemeData appTheme = ThemeData(
       color: Constants.mediumText,
     ),
   ),
-  cardTheme: CardTheme(
+  cardTheme: CardThemeData(
     elevation: 2,
     margin: EdgeInsets.symmetric(vertical: 8.0),
     shape: RoundedRectangleBorder(
